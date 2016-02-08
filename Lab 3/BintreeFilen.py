@@ -1,4 +1,4 @@
-class Bintree:
+class Bintree():
     def __init__(self):
         self.root = None
 
@@ -26,12 +26,12 @@ class Node:
         self.right = None
 
     def __str__(self):
-        return "NodeClass" + str(self.value)
+        return str(self.value)
 
 
 def putta(root, newvalue):
     if root is None:
-        root = Node(newvalue)
+        return Node(newvalue)
     else:
         if newvalue < root.value:
             if root.left is None:
@@ -42,19 +42,27 @@ def putta(root, newvalue):
             if root.right is None:
                 root.right = Node(newvalue)
             else:
-                putta(root.righ, newvalue)
-        elif newvalue == root.value:
-            pass
+                putta(root.right, newvalue)
+        elif newvalue is root.value:
+            print("Value finns redan!")
     return root
 
-def __contiains__(root, value):
+
+def finns(root, value):
     if root is None:
         return False
     elif value == root.value:
         return True
     elif root.left and value < root.value:
-        return __contiains__(root.left, value)
+        return finns(root.left, value)
     elif root.right and value > root.value:
-        return __contiains__(root.right, value)
+        return finns(root.right, value)
     else:
         return False
+
+
+def skriv(root):
+    if root is None:
+        skriv(root.left)
+        print(root.value)
+        skriv(root.right)
