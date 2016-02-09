@@ -28,10 +28,4 @@ class ArrayQ():
             return True
         else:
             return False
-q = ArrayQ()
-q.enqueue(1)
-q.enqueue(2)
-x = q.dequeue()
-y = q.dequeue()
-print(x,y)   # 1 2 ska komma ut
 
