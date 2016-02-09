@@ -2,31 +2,36 @@ from array import array
 
 
 class ArrayQ():
-    """
-    Initierar det privata attributet array för bättre abstraktion. 
-    """
-    def __init__(self, unit_type="i"):
-        self._array = array(unit_type)
+    '''
+    Klass med det privata attributet array med definierad numeriskt type code:i
+    som säger till att vi ska lagra  data av typ integer. 
+    '''
+    def __init__(self, type_code="i"):
+        self._array = array(type_code)
 
-    def enqueue(self, number):
-        """
-        Beroende på vilken ordning vi väljer i listan. insert/append
-        """
-        return self._array.insert(0, number) 
+    def enqueue(self, kortleksnummer):
+        '''
+        lägger till given kortleksnummer sist i array
+        '''
+        
+        return self._array.append(kortleksnummer) 
 
     def dequeue(self):
-        """
-        Använder pop för att ta bort det "första" i listan. Dvs det 
-        första vi enqueuear 
-        """
-        return self._array.pop()#Pop last element in list
+        '''
+        Tar bort det första element vi satt in i array och returnerar det.
+        '''
+        return self._array.pop(0)#pop returnerar den element på plats 0
 
     def isEmpty(self):
-        """
-        Kollar om arrayn innehåller något element. 
-        """
+        
         if len(self._array) == 0:
             return True
         else:
             return False
-
+            
+q = ArrayQ()
+q.enqueue(1)
+q.enqueue(2)
+x = q.dequeue()
+y = q.dequeue()
+print(x,y)   # 1 2 ska komma ut
