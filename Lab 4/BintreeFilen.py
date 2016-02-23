@@ -6,10 +6,13 @@ class Bintree():
         return "bintree Class"
 
     def put(self, newvalue):
+        if self.root is None:
+            self.root = Node(newvalue)
         # som sorterar in newvalue i trädet
-        self.root = putta(self.root, newvalue)
+        else:
+            self.root = putta(self.root, newvalue)
 
-    def __contains__(self, value):
+    def exists(self, value):
         # som kollar om value finns i trädet
         return finns(self.root, value)
 
@@ -29,24 +32,26 @@ class Node:
         return str(self.value)
 
 
-def putta(root, newvalue):
-    if root is None:
-        return Node(newvalue)
-    else:
-        if newvalue < root.value:
-            if root.left is None:
-                root.left = Node(newvalue)
-            else:
-                putta(root.left, newvalue)
-        elif newvalue > root.value:
-            if root.right is None:
-                root.right = Node(newvalue)
-            else:
-                putta(root.right, newvalue)
-        elif newvalue is root.value:
-            print("Value finns redan!")
-    return root
 
+def putta(root, newvalue):
+    
+    i=0
+    if newvalue < root.value:
+        if root.left is not None:
+            putta(root.left, newvalue)
+                
+        else:
+                
+            root.left = Node(newvalue)
+    elif newvalue > root.value:
+        if root.right is not None:
+                
+            putta(root.right, newvalue) 
+        else:
+                
+            root.right = Node(newvalue)
+
+    return root
 
 def finns(root, value):
     if root is None:
