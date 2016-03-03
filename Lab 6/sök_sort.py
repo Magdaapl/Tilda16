@@ -1,74 +1,75 @@
 from Låtar import Låtar
 
 def readfile(filen):
-    list = []
+    lista = []
     dictionary = {}
 
     with open(filen, encoding="utf8") as fil:
-        rader = fil.readlines()
-
-        for rad in rader:
-            objekt = rad.strip().split("<SEP>")
-            list.append(Låtar(objekt[0], objekt[1], objekt[2], objekt[3]))
-            dictionary[objekt[2]] = list[len(list)-1]
-    return list, dictionary
+        for rad in fil:
+            objekt = rad.split("<SEP>")
+            lista.append(Låtar(objekt[0], objekt[1], objekt[2], objekt[3]))
+            dictionary[objekt[2]] = lista[len(lista)-1]
+    return lista, dictionary
 
 
-def linsok(lista, artistnamn):   #linjärsökning i osorterad lista
+def linsok(list, artistnamn):   #linjärsökning i osorterad lista
     found = False
-
-    for i in lista:
-        if i.artistnamn == artistnamn:
+    counter = 0
+    while counter <len(list) and not found:
+        if list[counter].artistnamn == artistnamn:
             found = True
+        else:
+            counter = counter+1
 
     return found
 
 
-def sortera(lista):
-    if len(lista) > 1:
-        mitten = len(lista)//2
-        vensterHalva = lista[:mitten]
-        hogerHalva = lista[mitten:]
+def sortera(list):
+    if len(list)>1:
+        mid = len(list)//2
+        left = list[:mid]
+        right = list[mid:]
 
-        sortera(vensterHalva)
-        sortera(hogerHalva)
+        sortera(left)
+        sortera(right)
 
-        i, j, k = 0, 0, 0
+        i = 0
+        j = 0
+        k = 0
 
-        while i < len(vensterHalva) and j < len(hogerHalva):
-            if vensterHalva[i] < hogerHalva[j]:
-                lista[k] = vensterHalva[i]
-                i = i + 1
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                list[k] = left[i]
+                i += 1
             else:
-                lista[k] = hogerHalva[j]
-                j = j + 1
-            k = k + 1
+                list[k]=right[j]
+                j += 1
+            k += 1
 
-        while i < len(vensterHalva):
-            lista[k] = vensterHalva[i]
-            i = i + 1
-            k = k + 1
+        while i < len(left):
+            list[k] = left[i]
+            i += 1
+            k += 1
 
-        while j < len(hogerHalva):
-            lista[k] = hogerHalva[j]
-            j = j + 1
-            k = k + 1
+        while j < len(right):
+            list[k] = right[j]
+            j += 1
+            k += 1
+    return list
 
-    return lista
 
-
-def binsok(lista, artistnamn):
+def binsok(list, artistnamn):
     first = 0
-    last = len(lista)-1
+    last = len(list)-1
     found = False
 
     while first <= last and not found:
         mid = (first + last)//2
 
-        if lista[mid] == artistnamn:
+        if list[mid].artistnamn == artistnamn:
             found = True
         else:
-            if artistnamn < lista[mid].get_artist():
+            if artistnamn < list[mid].artistnamn:
                 last = mid-1
             else:
                 first = mid+1
